@@ -5,6 +5,7 @@ import { BookCoverPlaceholder } from './BookCoverPlaceholder';
 import { ProgressBar } from '../common/ProgressBar';
 import { QuickStatusModal } from './QuickStatusModal';
 import { useBooks } from '../../context/BookContext';
+import { getCoverImageUrl } from '../../utils/coverUtils';
 
 export const BookListRow = ({ book, onEdit, onDelete }) => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export const BookListRow = ({ book, onEdit, onDelete }) => {
           <div className="w-14 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-parchment-100 dark:bg-ink-800 shadow-sm">
             {book.coverImage ? (
               <img
-                src={book.coverImage}
+                src={getCoverImageUrl(book.coverImage)}
                 alt={book.title}
                 className="w-full h-full object-cover"
               />

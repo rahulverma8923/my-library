@@ -23,6 +23,7 @@ import { ProgressBar } from '../components/common/ProgressBar';
 import { EditBookModal } from '../components/books/EditBookModal';
 import { ConfirmModal } from '../components/common/ConfirmModal';
 import { formatDate } from '../utils/dateUtils';
+import { getCoverImageUrl } from '../utils/coverUtils';
 import { useBooks } from '../context/BookContext';
 import { useToast } from '../context/ToastContext';
 
@@ -191,7 +192,7 @@ export const BookDetailPage = () => {
           <div className="w-full aspect-[2/3] rounded-2xl overflow-hidden shadow-book bg-parchment-200 dark:bg-ink-800 border border-parchment-300 dark:border-ink-700">
             {book.coverImage ? (
               <img
-                src={book.coverImage}
+                src={getCoverImageUrl(book.coverImage)}
                 alt={book.title}
                 className="w-full h-full object-cover"
               />

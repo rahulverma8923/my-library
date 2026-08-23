@@ -4,6 +4,7 @@ import { BookOpen, ArrowRight } from 'lucide-react';
 import { BookCoverPlaceholder } from '../books/BookCoverPlaceholder';
 import { ProgressBar } from '../common/ProgressBar';
 import { EmptyState } from '../common/EmptyState';
+import { getCoverImageUrl } from '../../utils/coverUtils';
 
 export const CurrentlyReadingSection = ({ books = [] }) => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export const CurrentlyReadingSection = ({ books = [] }) => {
             <div className="w-20 h-28 flex-shrink-0 rounded-xl overflow-hidden shadow-sm bg-parchment-200 dark:bg-ink-800">
               {book.coverImage ? (
                 <img
-                  src={book.coverImage}
+                  src={getCoverImageUrl(book.coverImage)}
                   alt={book.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />

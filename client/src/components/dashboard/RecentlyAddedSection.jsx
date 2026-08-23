@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Calendar } from 'lucide-react';
 import { BookCoverPlaceholder } from '../books/BookCoverPlaceholder';
 import { formatDate } from '../../utils/dateUtils';
+import { getCoverImageUrl } from '../../utils/coverUtils';
 
 export const RecentlyAddedSection = ({ books = [] }) => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export const RecentlyAddedSection = ({ books = [] }) => {
               <div className="w-full aspect-[2/3] rounded-xl overflow-hidden mb-2.5 bg-parchment-200 dark:bg-ink-800 shadow-sm">
                 {book.coverImage ? (
                   <img
-                    src={book.coverImage}
+                    src={getCoverImageUrl(book.coverImage)}
                     alt={book.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
