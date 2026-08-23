@@ -1,20 +1,22 @@
 const mongoose = require('mongoose');
 
 let mongod = null;
+let isInMemory = false;
 
 const connectDB = async () => {
   try {
     const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/my_library';
     
-    // Set connection timeout to 4 seconds for fast fallback if local Mongo isn't active
+    // Set connection timeout
     await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 4000
+      serverSelectionTimeoutMS: 6000
     });
     
-    console.log(`🌿 MongoDB Connected to: ${mongoose.connection.host}/${mongoose.connection.name}`);
+    isInMemory = false;
+    console.log(`🌿 MongoDB Connected to: ${mongoose.connection.host}/${mongoose.connection.name} (Permanent Storage)`);
   } catch (error) {
-    console.warn(`⚠️ Local MongoDB connection failed (${error.message}).`);
-    console.log('🔄 Initializing in-memory MongoDB server fallback...');
+    console.warn(`⚠️ MongoDB connection to MONGODB_URI failed (${error.message}).`);
+    console.log('🔄 Initializing in-memory MongoDB server fallback (Data will NOT persist across restarts)...');
     
     try {
       const { MongoMemoryServer } = require('mongodb-memory-server');
@@ -22,12 +24,22 @@ const connectDB = async () => {
       const memoryUri = mongod.getUri();
       
       await mongoose.connect(memoryUri);
-      console.log(`✨ In-Memory MongoDB Connected successfully: ${memoryUri}`);
+      isInMemory = true;
+      console.log(`⚠️ Running on In-Memory MongoDB (TEMPORARY RAM STORAGE): ${memoryUri}`);
     } catch (memErr) {
       console.error(`❌ In-Memory MongoDB also failed: ${memErr.message}`);
       process.exit(1);
     }
   }
+};
+
+const getDbInfo = () => {
+  return {
+    isInMemory,
+    status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    host: mongoose.connection.host || 'unknown',
+    storageType: isInMemory ? 'Temporary RAM (Wipes on restart)' : 'Permanent MongoDB Cloud'
+  };
 };
 
 const disconnectDB = async () => {
@@ -41,4 +53,5 @@ const disconnectDB = async () => {
   }
 };
 
-module.exports = { connectDB, disconnectDB };
+module.exports = { connectDB, disconnectDB, getDbInfo };
+

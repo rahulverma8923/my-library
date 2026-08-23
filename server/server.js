@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
-const { connectDB } = require('./config/db');
+const { connectDB, getDbInfo } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const User = require('./models/User');
 const { seedDatabase } = require('./utils/seed');
@@ -67,6 +67,7 @@ app.get('/', (req, res) => {
     success: true,
     message: '📖 My Library API Server is live and healthy! 🚀',
     version: '1.0.0',
+    database: getDbInfo(),
     endpoints: {
       health: '/api/health',
       auth: '/api/auth',
@@ -80,6 +81,7 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'online',
     message: 'My Library API is running smoothly',
+    database: getDbInfo(),
     timestamp: new Date().toISOString()
   });
 });
