@@ -6,16 +6,36 @@
   :root {
     color-scheme: light;
   }
-  .dark {
+  html.dark, .dark {
     color-scheme: dark;
+  }
+
+  html {
+    background-color: #FDFBF7;
+    color: #181C1A;
+  }
+
+  html.dark {
+    background-color: #090D0B;
+    color: #F0F3F1;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #FDFBF7;
+    color: #181C1A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, .font-serif {
+  html.dark body {
+    background-color: #090D0B;
+    color: #F0F3F1;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif {
     font-family: 'Playfair Display', Georgia, serif;
+    color: inherit;
   }
 }
 

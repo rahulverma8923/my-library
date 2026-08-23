@@ -5,7 +5,7 @@ import { ThemeToggle } from '../components/common/ThemeToggle';
 
 export const AuthLayout = () => {
   return (
-    <div className="min-h-screen flex bg-parchment-100/60 dark:bg-ink-950 text-ink-800 dark:text-ink-50">
+    <div className="min-h-screen flex bg-[#FAF7F2] dark:bg-[#090D0B] text-[#161D1A] dark:text-[#F0F3F1]">
       {/* Left Literary Showcase Panel (Desktop) */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-forest-950 via-forest-900 to-ink-950 text-parchment-50 p-12 flex-col justify-between relative overflow-hidden">
         {/* Background ambient lighting */}
@@ -62,14 +62,14 @@ export const AuthLayout = () => {
       </div>
 
       {/* Right Form Area */}
-      <div className="flex-1 flex flex-col justify-between p-6 sm:p-12 overflow-y-auto">
+      <div className="flex-1 flex flex-col justify-between p-6 sm:p-12 overflow-y-auto bg-[#FAF7F2] dark:bg-[#090D0B] text-[#161D1A] dark:text-[#F0F3F1]">
         <div className="flex justify-between items-center max-w-md w-full mx-auto">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-forest-800 text-parchment-50 flex items-center justify-center">
               <BookMarked className="w-4 h-4" />
             </div>
-            <span className="font-serif font-bold text-base text-ink-900 dark:text-ink-50">
+            <span className="font-serif font-bold text-base text-[#161D1A] dark:text-[#F0F3F1]">
               My Library
             </span>
           </div>
@@ -83,7 +83,7 @@ export const AuthLayout = () => {
           <Outlet />
         </div>
 
-        <div className="max-w-md w-full mx-auto text-center text-xs text-ink-400">
+        <div className="max-w-md w-full mx-auto text-center text-xs text-[#5C7066] dark:text-[#83968C]">
           © {new Date().getFullYear()} My Library. All rights reserved.
         </div>
       </div>
