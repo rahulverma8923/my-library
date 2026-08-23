@@ -13,21 +13,40 @@ export const setCustomApiUrl = (url) => {
   api.defaults.baseURL = getApiBaseUrl();
 };
 
+export const formatUrl = (rawUrl) => {
+  if (!rawUrl) return '';
+  let url = rawUrl.trim().replace(/\/+$/, '');
+  if (!url) return '';
+  if (url === '/api' || url.startsWith('/')) return url;
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
+  }
+  return url;
+};
+
 export const getApiBaseUrl = () => {
   const custom = getCustomApiUrl();
   let url = custom || import.meta.env.VITE_API_URL || '';
-  url = url.trim().replace(/\/+$/, ''); // Remove trailing slashes
+  url = formatUrl(url);
   if (!url) return '/api';
   if (url.endsWith('/api')) return url;
   return `${url}/api`;
 };
 
 export const checkServerHealth = async (overrideUrl) => {
-  let target = overrideUrl || getApiBaseUrl();
+  let target = overrideUrl ? formatUrl(overrideUrl) : getApiBaseUrl();
+  if (!target || target === '/api') {
+    target = window.location.origin + '/api';
+  }
   target = target.trim().replace(/\/+$/, '');
-  const healthUrl = target.endsWith('/api') ? `${target}/health` : (target.endsWith('/api/health') ? target : `${target}/api/health`);
+  const healthUrl = target.endsWith('/api')
+    ? `${target}/health`
+    : (target.endsWith('/api/health') ? target : `${target}/api/health`);
   
-  const response = await fetch(healthUrl, { method: 'GET', headers: { Accept: 'application/json' } });
+  const response = await fetch(healthUrl, {
+    method: 'GET',
+    headers: { Accept: 'application/json' }
+  });
   if (!response.ok) {
     throw new Error(`Server returned HTTP status ${response.status}`);
   }
