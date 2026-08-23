@@ -6,7 +6,12 @@ const generateToken = require('../utils/generateToken');
 // @access  Public
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, confirmPassword, preferredLanguage } = req.body;
+    let { name, email, password, confirmPassword, preferredLanguage } = req.body;
+
+    name = name ? String(name).trim() : '';
+    email = email ? String(email).trim().toLowerCase() : '';
+    password = password ? String(password).trim() : '';
+    confirmPassword = confirmPassword ? String(confirmPassword).trim() : '';
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -30,7 +35,7 @@ const registerUser = async (req, res, next) => {
     }
 
     // Check if user already exists
-    const userExists = await User.findOne({ email: email.toLowerCase() });
+    const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({
         success: false,
@@ -41,7 +46,7 @@ const registerUser = async (req, res, next) => {
     // Create user
     const user = await User.create({
       name,
-      email: email.toLowerCase(),
+      email,
       password,
       preferredLanguage: preferredLanguage || 'English'
     });
@@ -72,7 +77,10 @@ const registerUser = async (req, res, next) => {
 // @access  Public
 const loginUser = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    email = email ? String(email).trim().toLowerCase() : '';
+    password = password ? String(password).trim() : '';
 
     if (!email || !password) {
       return res.status(400).json({
@@ -82,7 +90,7 @@ const loginUser = async (req, res, next) => {
     }
 
     // Find user by email and explicitly select password
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
       return res.status(401).json({
         success: false,
