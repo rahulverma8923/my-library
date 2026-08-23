@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 let mongod = null;
 let isInMemory = false;
+let lastDbError = null;
+
+const DEFAULT_ATLAS_URI =
+  'mongodb+srv://rv783060_db_user:yYGVOCSWUmwdkVEW@cluster0.k3rzpca.mongodb.net/my_library?retryWrites=true&w=majority';
 
 const connectDB = async () => {
   try {
@@ -10,23 +14,20 @@ const connectDB = async () => {
       process.env.MONGO_URI ||
       process.env.DATABASE_URL ||
       process.env.MONGODB_URL ||
-      '';
+      DEFAULT_ATLAS_URI;
 
-    let mongoUri = rawUri ? rawUri.trim().replace(/^["']|["']$/g, '') : '';
+    let mongoUri = rawUri ? rawUri.trim().replace(/^["']|["']$/g, '') : DEFAULT_ATLAS_URI;
 
-    if (!mongoUri) {
-      console.warn('⚠️ No MONGODB_URI environment variable detected on server.');
-      mongoUri = 'mongodb://127.0.0.1:27017/my_library';
-    }
-
-    // Set connection timeout
+    // Set connection timeout with 15s allowance for cloud TLS handshakes
     await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 6000
+      serverSelectionTimeoutMS: 15000
     });
     
     isInMemory = false;
+    lastDbError = null;
     console.log(`🌿 MongoDB Connected to: ${mongoose.connection.host}/${mongoose.connection.name} (Permanent Storage)`);
   } catch (error) {
+    lastDbError = error.message;
     console.warn(`⚠️ MongoDB connection to MONGODB_URI failed (${error.message}).`);
     console.log('🔄 Initializing in-memory MongoDB server fallback (Data will NOT persist across restarts)...');
     
@@ -50,7 +51,8 @@ const getDbInfo = () => {
     isInMemory,
     status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
     host: mongoose.connection.host || 'unknown',
-    storageType: isInMemory ? 'Temporary RAM (Wipes on restart)' : 'Permanent MongoDB Cloud'
+    storageType: isInMemory ? 'Temporary RAM (Wipes on restart)' : 'Permanent MongoDB Cloud',
+    lastError: lastDbError
   };
 };
 
