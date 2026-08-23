@@ -15,6 +15,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { Avatar } from './Avatar';
 import { ThemeToggle } from './ThemeToggle';
+import { BrandLogo } from './BrandLogo';
 import { useBooks } from '../../context/BookContext';
 
 export const Sidebar = ({ onAddBook, onImportBooks }) => {
@@ -40,15 +41,13 @@ export const Sidebar = ({ onAddBook, onImportBooks }) => {
       <div className="space-y-4">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-forest-700 to-forest-900 text-parchment-50 flex items-center justify-center shadow-md">
-              <BookMarked className="w-5 h-5" />
-            </div>
+            <BrandLogo size="md" />
             <div>
-              <span className="font-serif font-bold text-lg text-ink-900 dark:text-ink-50 leading-tight block">
+              <h1 className="font-serif font-bold text-lg text-ink-900 dark:text-ink-50 leading-none">
                 My Library
-              </span>
-              <span className="text-[10px] text-ink-400 dark:text-ink-400 font-medium tracking-tight block">
-                Your books. Your progress.
+              </h1>
+              <span className="text-[11px] text-ink-500 dark:text-ink-400 font-medium">
+                Reading Sanctuary
               </span>
             </div>
           </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { BookMarked, Sparkles, BookOpen, Quote } from 'lucide-react';
+import { Sparkles, BookOpen, Quote } from 'lucide-react';
 import { ThemeToggle } from '../components/common/ThemeToggle';
+import { BrandLogo } from '../components/common/BrandLogo';
 
 export const AuthLayout = () => {
   return (
@@ -13,10 +14,8 @@ export const AuthLayout = () => {
         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-warmAmber-500/10 rounded-full blur-3xl" />
 
         {/* Top Logo */}
-        <div className="relative z-10 flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
-            <BookMarked className="w-6 h-6 text-parchment-100" />
-          </div>
+        <div className="relative z-10 flex items-center gap-3.5">
+          <BrandLogo size="lg" />
           <div>
             <span className="font-serif font-bold text-2xl tracking-tight text-white block">
               My Library
@@ -65,10 +64,8 @@ export const AuthLayout = () => {
       <div className="flex-1 flex flex-col justify-between p-6 sm:p-12 overflow-y-auto bg-[#FAF7F2] dark:bg-[#090D0B] text-[#161D1A] dark:text-[#F0F3F1]">
         <div className="flex justify-between items-center max-w-md w-full mx-auto">
           {/* Mobile Logo */}
-          <div className="lg:hidden flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-forest-800 text-parchment-50 flex items-center justify-center">
-              <BookMarked className="w-4 h-4" />
-            </div>
+          <div className="lg:hidden flex items-center gap-2.5">
+            <BrandLogo size="sm" />
             <span className="font-serif font-bold text-base text-[#161D1A] dark:text-[#F0F3F1]">
               My Library
             </span>

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { BookMarked, Search, Plus, User } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { Avatar } from './Avatar';
+import { BrandLogo } from './BrandLogo';
 import { useAuth } from '../../context/AuthContext';
 
 export const Navbar = ({ onAddBook }) => {
@@ -18,9 +19,7 @@ export const Navbar = ({ onAddBook }) => {
           onClick={() => navigate('/home')}
           className="flex items-center gap-2 cursor-pointer"
         >
-          <div className="w-8 h-8 rounded-xl bg-forest-800 text-parchment-50 flex items-center justify-center shadow-sm">
-            <BookMarked className="w-4 h-4" />
-          </div>
+          <BrandLogo size="sm" />
           <span className="font-serif font-bold text-base text-ink-900 dark:text-ink-50">
             My Library
           </span>

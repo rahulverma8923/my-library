@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F382A" />
+      <stop offset="50%" stop-color="#144A38" />
+      <stop offset="100%" stop-color="#092218" />
+    </linearGradient>
+
+    <!-- Gold Accent Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+
+    <!-- Parchment Page Gradient -->
+    <linearGradient id="pageGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#EFE6D8" />
+    </linearGradient>
+    <linearGradient id="pageGradRight" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#EFE6D8" />
+    </linearGradient>
+
+    <!-- Ribbon Gradient -->
+    <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FB7185" />
+      <stop offset="100%" stop-color="#E11D48" />
+    </linearGradient>
+
+    <!-- Shadow filter -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background Squircle Container -->
+  <rect x="4" y="4" width="120" height="120" rx="30" ry="30" fill="url(#bgGradient)" stroke="#237053" stroke-width="2" />
+  
+  <!-- Subtle Inner Ring Highlight -->
+  <rect x="7" y="7" width="114" height="114" rx="27" ry="27" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-opacity="0.4" />
+
+  <!-- Book Spine Base / Cover Wings -->
+  <g filter="url(#dropShadow)">
+    <!-- Back Cover Left -->
+    <path d="M 28 84 C 42 80, 56 82, 64 88 C 56 80, 42 78, 28 82 Z" fill="#D97706" />
+    <!-- Back Cover Right -->
+    <path d="M 100 84 C 86 80, 72 82, 64 88 C 72 80, 86 78, 100 82 Z" fill="#D97706" />
+
+    <!-- Left Book Page -->
+    <path d="M 64 84 C 54 78, 38 76, 26 80 L 26 40 C 38 36, 54 38, 64 44 Z" fill="url(#pageGradLeft)" />
+    
+    <!-- Right Book Page -->
+    <path d="M 64 84 C 74 78, 90 76, 102 80 L 102 40 C 90 36, 74 38, 64 44 Z" fill="url(#pageGradRight)" />
+
+    <!-- Center Book Spine Line -->
+    <line x1="64" y1="44" x2="64" y2="84" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" />
+
+    <!-- Left Page Subtle Lines -->
+    <path d="M 36 50 C 44 48, 52 49, 56 52" stroke="#B0BDB6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+    <path d="M 36 58 C 44 56, 52 57, 56 60" stroke="#B0BDB6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+    <path d="M 36 66 C 44 64, 52 65, 56 68" stroke="#B0BDB6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+
+    <!-- Right Page Subtle Lines -->
+    <path d="M 92 50 C 84 48, 76 49, 72 52" stroke="#B0BDB6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+    <path d="M 92 58 C 84 56, 76 57, 72 60" stroke="#B0BDB6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+    <path d="M 92 66 C 84 64, 76 65, 72 68" stroke="#B0BDB6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+
+    <!-- Hanging Silk Ribbon Bookmark -->
+    <path d="M 60 42 L 60 96 L 64 92 L 68 96 L 68 42 Z" fill="url(#ribbonGrad)" />
+
+    <!-- Magic Radiant 4-Point Star (Top Right) -->
+    <path d="M 98 28 Q 98 34, 104 34 Q 98 34, 98 40 Q 98 34, 92 34 Q 98 34, 98 28 Z" fill="url(#goldGrad)" />
+    <!-- Secondary mini star -->
+    <path d="M 30 30 Q 30 33, 33 33 Q 30 33, 30 36 Q 30 33, 27 33 Q 30 33, 30 30 Z" fill="url(#goldGrad)" opacity="0.8" />
+  </g>
+</svg>
