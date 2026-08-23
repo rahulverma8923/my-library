@@ -35,6 +35,20 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Routes
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: '📖 My Library API Server is live and healthy! 🚀',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      books: '/api/books',
+      dashboard: '/api/dashboard'
+    }
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'online',
