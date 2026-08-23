@@ -1,16 +1,43 @@
 import axios from 'axios';
 
-const getApiBaseUrl = () => {
-  let url = import.meta.env.VITE_API_URL || '';
+export const getCustomApiUrl = () => {
+  return localStorage.getItem('my_library_custom_api_url') || '';
+};
+
+export const setCustomApiUrl = (url) => {
+  if (!url || !url.trim()) {
+    localStorage.removeItem('my_library_custom_api_url');
+  } else {
+    localStorage.setItem('my_library_custom_api_url', url.trim());
+  }
+  api.defaults.baseURL = getApiBaseUrl();
+};
+
+export const getApiBaseUrl = () => {
+  const custom = getCustomApiUrl();
+  let url = custom || import.meta.env.VITE_API_URL || '';
   url = url.trim().replace(/\/+$/, ''); // Remove trailing slashes
   if (!url) return '/api';
   if (url.endsWith('/api')) return url;
   return `${url}/api`;
 };
 
+export const checkServerHealth = async (overrideUrl) => {
+  let target = overrideUrl || getApiBaseUrl();
+  target = target.trim().replace(/\/+$/, '');
+  const healthUrl = target.endsWith('/api') ? `${target}/health` : (target.endsWith('/api/health') ? target : `${target}/api/health`);
+  
+  const response = await fetch(healthUrl, { method: 'GET', headers: { Accept: 'application/json' } });
+  if (!response.ok) {
+    throw new Error(`Server returned HTTP status ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+};
+
 const api = axios.create({
   baseURL: getApiBaseUrl(),
-  timeout: 30000,
+  timeout: 35000,
   headers: {
     'Content-Type': 'application/json'
   }

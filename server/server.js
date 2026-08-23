@@ -5,13 +5,27 @@ const path = require('path');
 const morgan = require('morgan');
 const { connectDB } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const User = require('./models/User');
+const { seedDatabase } = require('./utils/seed');
 
 const authRoutes = require('./routes/authRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
-// Connect to Database
-connectDB();
+// Connect to Database and auto-seed if empty
+const initDB = async () => {
+  await connectDB();
+  try {
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      console.log('🌱 Database is empty. Creating initial demo account and sample library...');
+      await seedDatabase({ autoDisconnect: false });
+    }
+  } catch (err) {
+    console.warn('Auto-seed check note:', err.message);
+  }
+};
+initDB();
 
 const app = express();
 

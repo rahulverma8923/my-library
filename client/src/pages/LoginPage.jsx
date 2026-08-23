@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, LogIn, Sparkles, KeyRound, Check, X } from 'lucide-react';
+import { Mail, Lock, LogIn, Sparkles, KeyRound, Check, X, Server } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { ServerConfigModal } from '../components/common/ServerConfigModal';
+import { getApiBaseUrl } from '../services/api';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ export const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [forgotModalOpen, setForgotModalOpen] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
+  const [serverModalOpen, setServerModalOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -208,6 +211,24 @@ export const LoginPage = () => {
           </Link>
         </p>
       </div>
+
+      {/* Backend Connection Status Trigger */}
+      <div className="pt-2 flex justify-center">
+        <button
+          type="button"
+          onClick={() => setServerModalOpen(true)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-medium text-ink-500 hover:text-ink-800 dark:text-ink-400 dark:hover:text-ink-200 bg-parchment-100 hover:bg-parchment-200 dark:bg-ink-800 dark:hover:bg-ink-700 border border-parchment-200 dark:border-ink-700 transition-all"
+        >
+          <Server className="w-3.5 h-3.5 text-forest-600 dark:text-forest-400" />
+          <span>Server: <span className="font-mono text-ink-700 dark:text-ink-200">{getApiBaseUrl()}</span></span>
+        </button>
+      </div>
+
+      {/* Backend Configuration Modal */}
+      <ServerConfigModal
+        isOpen={serverModalOpen}
+        onClose={() => setServerModalOpen(false)}
+      />
 
       {/* Forgot Password Modal */}
       {forgotModalOpen && (

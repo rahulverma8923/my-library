@@ -5,10 +5,12 @@ const User = require('../models/User');
 const Book = require('../models/Book');
 const sampleBooks = require('./seedData');
 
-const seedDatabase = async () => {
+const seedDatabase = async ({ autoDisconnect = false } = {}) => {
   try {
-    await connectDB();
-    console.log('🧹 Clearing existing demo records...');
+    if (mongoose.connection.readyState === 0) {
+      await connectDB();
+    }
+    console.log('🧹 Preparing demo reader account and sample library...');
 
     const demoEmail = 'demo@mylibrary.com';
     let user = await User.findOne({ email: demoEmail });
@@ -36,14 +38,26 @@ const seedDatabase = async () => {
 
     await Book.insertMany(booksToInsert);
     console.log(`📚 Successfully inserted ${booksToInsert.length} sample books into demo user's library!`);
-
     console.log('🎉 Database seeding completed successfully.');
-    await disconnectDB();
-    process.exit(0);
+
+    if (autoDisconnect) {
+      await disconnectDB();
+      process.exit(0);
+    }
+    return { success: true, user, count: booksToInsert.length };
   } catch (error) {
     console.error('❌ Seeding error:', error);
-    process.exit(1);
+    if (autoDisconnect) {
+      process.exit(1);
+    }
+    throw error;
   }
 };
 
-seedDatabase();
+// If run directly via CLI (e.g. `node utils/seed.js` or `npm run seed`)
+if (require.main === module) {
+  seedDatabase({ autoDisconnect: true });
+}
+
+module.exports = { seedDatabase };
+
