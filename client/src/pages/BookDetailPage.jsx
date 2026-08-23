@@ -223,20 +223,20 @@ export const BookDetailPage = () => {
           </div>
 
           {/* Interactive Reading Status Stepper */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-parchment-50 dark:bg-ink-950/60 border border-parchment-200 dark:border-ink-800 space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-ink-400 block">
+          <div className="p-3.5 sm:p-5 rounded-2xl bg-parchment-50 dark:bg-ink-950/60 border border-parchment-200 dark:border-ink-800 space-y-3 sm:space-y-4">
+            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-ink-600 dark:text-ink-300 block">
               Reading Status
             </span>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               {['Not Started', 'Reading', 'Finished'].map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => handleStatusChange(s)}
-                  className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition-all text-center ${
+                  className={`py-2 px-1 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold border transition-all text-center truncate ${
                     book.status === s
                       ? 'bg-forest-800 text-parchment-50 border-forest-700 shadow-md scale-[1.02]'
-                      : 'bg-white dark:bg-ink-800 text-ink-700 dark:text-ink-300 border-parchment-300 dark:border-ink-700 hover:bg-parchment-100 dark:hover:bg-ink-750'
+                      : 'bg-white dark:bg-ink-800 text-ink-800 dark:text-ink-200 border-parchment-300 dark:border-ink-700 hover:bg-parchment-100 dark:hover:bg-ink-700'
                   }`}
                 >
                   {s}

@@ -67,14 +67,14 @@ export const BookListRow = ({ book, onEdit, onDelete }) => {
                 {book.title}
               </h3>
             </div>
-            <p className="text-xs text-ink-600 dark:text-ink-400 font-medium truncate mb-1.5">
+            <p className="text-xs text-ink-700 dark:text-ink-300 font-medium truncate mb-1.5">
               {book.author}
             </p>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-parchment-100 dark:bg-ink-800 text-ink-600 dark:text-ink-400 border border-parchment-200 dark:border-ink-700 font-medium">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-parchment-100 dark:bg-ink-800 text-ink-700 dark:text-ink-200 border border-parchment-200 dark:border-ink-700 font-medium">
                 {book.category}
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-parchment-100 dark:bg-ink-800 text-ink-500 dark:text-ink-400 border border-parchment-200 dark:border-ink-700">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-parchment-100 dark:bg-ink-800 text-ink-600 dark:text-ink-300 border border-parchment-200 dark:border-ink-700">
                 {book.language}
               </span>
             </div>
