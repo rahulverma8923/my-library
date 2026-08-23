@@ -5,8 +5,20 @@ let isInMemory = false;
 
 const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/my_library';
-    
+    let rawUri =
+      process.env.MONGODB_URI ||
+      process.env.MONGO_URI ||
+      process.env.DATABASE_URL ||
+      process.env.MONGODB_URL ||
+      '';
+
+    let mongoUri = rawUri ? rawUri.trim().replace(/^["']|["']$/g, '') : '';
+
+    if (!mongoUri) {
+      console.warn('⚠️ No MONGODB_URI environment variable detected on server.');
+      mongoUri = 'mongodb://127.0.0.1:27017/my_library';
+    }
+
     // Set connection timeout
     await mongoose.connect(mongoUri, {
       serverSelectionTimeoutMS: 6000
