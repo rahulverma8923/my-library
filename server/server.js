@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
-const { connectDB, getDbInfo } = require('./config/db');
+const { connectDB, getDbInfo, reconnectToCloud } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const User = require('./models/User');
 const { seedDatabase } = require('./utils/seed');
@@ -77,12 +77,26 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
+  const dbInfo = getDbInfo();
+  // If running in memory, try to seamlessly connect to cloud in background
+  if (dbInfo.isInMemory) {
+    await reconnectToCloud();
+  }
+
   res.status(200).json({
     status: 'online',
     message: 'My Library API is running smoothly',
     database: getDbInfo(),
     timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/api/reconnect-db', async (req, res) => {
+  const result = await reconnectToCloud();
+  res.status(200).json({
+    ...result,
+    database: getDbInfo()
   });
 });
 
