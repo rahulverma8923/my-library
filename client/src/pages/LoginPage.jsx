@@ -27,6 +27,19 @@ export const LoginPage = () => {
     }));
   };
 
+  const getErrorMessage = (err) => {
+    if (err.response?.data?.message) {
+      return err.response.data.message;
+    }
+    if (err.isHtmlFallback) {
+      return 'Backend API URL is not reaching the server. Please check VITE_API_URL on Vercel.';
+    }
+    if (err.code === 'ERR_NETWORK' || err.message === 'Network Error' || !err.response) {
+      return 'Unable to connect to backend server. If using Render, please wait 30 seconds for the free server to wake up.';
+    }
+    return 'Invalid email or password';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
@@ -41,7 +54,7 @@ export const LoginPage = () => {
       navigate('/home');
     } catch (err) {
       console.error(err);
-      showError(err.response?.data?.message || 'Invalid email or password');
+      showError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -62,7 +75,7 @@ export const LoginPage = () => {
       navigate('/home');
     } catch (err) {
       console.error(err);
-      showError('Demo account login failed. Please register or verify the server.');
+      showError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }

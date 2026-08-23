@@ -56,7 +56,15 @@ export const RegisterPage = () => {
       navigate('/home');
     } catch (err) {
       console.error(err);
-      showError(err.response?.data?.message || 'Registration failed. Please try again.');
+      if (err.response?.data?.message) {
+        showError(err.response.data.message);
+      } else if (err.isHtmlFallback) {
+        showError('Backend API URL is not reaching the server. Please check VITE_API_URL on Vercel.');
+      } else if (err.code === 'ERR_NETWORK' || err.message === 'Network Error' || !err.response) {
+        showError('Unable to connect to backend server. If using Render, please wait 30 seconds for the free server to wake up.');
+      } else {
+        showError('Registration failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
