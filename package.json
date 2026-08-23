@@ -1,0 +1,19 @@
+{
+  "name": "my-library-workspace",
+  "version": "1.0.0",
+  "description": "My Library - Personal Digital Library and Reading Tracker",
+  "scripts": {
+    "dev": "npx -y concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "seed": "cd server && npm run seed",
+    "install:all": "cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": ["library", "reading-tracker", "books", "react", "express", "mongodb"],
+  "author": "Antigravity",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
